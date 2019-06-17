@@ -1,7 +1,8 @@
 #pragma once
 
-
-
+#include "../framework/Component.hpp"
+#include <vector>
+#include <string>
 class Entity
 {
 public:
@@ -11,7 +12,16 @@ public:
     Entity &operator=(Entity &&) = default;
     Entity &operator=(const Entity &) = default;
     virtual ~Entity() = default;
-    virtual void Update() = 0;
-private:
+    virtual void Update() {
+        for (size_t i = 0; i < components.size(); i++)
+        {
+            components[i]->Update();
+        }
+
+    }
+
+    std::vector< std::shared_ptr<Component> > components;
+    std::string name;
+    private:
     
 };

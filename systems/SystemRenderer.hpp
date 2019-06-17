@@ -11,7 +11,9 @@ public:
     SystemRenderer &operator=(SystemRenderer &&) = default;
     SystemRenderer &operator=(const SystemRenderer &) = default;
     virtual ~SystemRenderer() = default;
-    virtual void Update() = 0;
+    virtual void Update() {
+
+    }
     unsigned long lastVAO = 0;
 private:
     

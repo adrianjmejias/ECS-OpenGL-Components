@@ -12,7 +12,9 @@ public:
     SystemInput &operator=(SystemInput &&) = default;
     SystemInput &operator=(const SystemInput &) = default;
     virtual ~SystemInput() = default;
-    virtual void Update() = 0;
+    virtual void Update() {
+
+    }
 
 
     bool GetKey(){}

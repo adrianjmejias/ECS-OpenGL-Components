@@ -1,5 +1,8 @@
 #pragma once
+#include <GL/gl3w.h> 
 #include "../framework/Component.hpp"
+
+
 class MeshRenderer : public Component
 {
 public:
@@ -11,10 +14,20 @@ public:
     ~MeshRenderer() = default;
     
 
-    public: int VAO_ID = -1;
+    public: unsigned int VAO_ID = -1;
+
+
+    
+
 
     virtual void Update(){
-        
+
+
+        //glBindBuffer(VAO_ID, GL_ARRAY_BUFFER);
+
+        ////glDrawArrays(GL_TRIANGLES, )
+
+        //glBindBuffer(0, GL_ARRAY_BUFFER);
     }
 
 
@@ -22,5 +35,9 @@ public:
 
     }
 private:
+
+
+
+
     
 };
