@@ -14,6 +14,7 @@ public:
     SystemMain &operator=(const SystemMain &) = default;
     virtual ~SystemMain() = default;
     virtual void Update() {
+
     }
 
 
@@ -23,7 +24,7 @@ public:
 
 
 
-    std::vector<std::shared_ptr<System> > systems;
+    std::vector<System> systems;
 
 private:
 

@@ -1,43 +1,57 @@
 #pragma once
-#include <GL/gl3w.h> 
-#include "../framework/Component.hpp"
+
+//#include "../loaders/ShaderProgram.hpp"
+#include "../assets/Mesh.hpp"
+#include "../framework/StartableComponent.hpp"
+#include <memory>
+#include <functional>
+//#include "../loaders/Shader.hpp"
+#include "../internal/ITweakable.hpp"
 
 
-class MeshRenderer : public Component
+
+
+class MeshRenderer : virtual public Component, public ITweakable
 {
-public:
-    MeshRenderer() = default;
-    MeshRenderer(MeshRenderer &&) = default;
-    MeshRenderer(const MeshRenderer &) = default;
-    MeshRenderer &operator=(MeshRenderer &&) = default;
-    MeshRenderer &operator=(const MeshRenderer &) = default;
-    ~MeshRenderer() = default;
-    
-
-    public: unsigned int VAO_ID = -1;
-
-
-    
-
-
-    virtual void Update(){
-
-
-        //glBindBuffer(VAO_ID, GL_ARRAY_BUFFER);
-
-        ////glDrawArrays(GL_TRIANGLES, )
-
-        //glBindBuffer(0, GL_ARRAY_BUFFER);
-    }
-
-
-    public: void operator()(){
-
-    }
 private:
+	friend class SystemRenderer;
+
+public:
+	Mesh *mesh;
+	MeshRenderer(Mesh* mesh) : Component() {
+		this->mesh = mesh;
+	}
+
+public:
+	bool useTextures = true;
 
 
 
+	void DebugUI(TwBar *tw, unsigned int id) {
 
-    
+		char *buff = (char*)alloca(sizeof(char) * 10);
+		_itoa_s((int)transform->twId, buff, 10, 10);
+
+		std::string idStr(buff);
+		std::string name = "Material " + idStr;
+
+		Material &mat = *mesh->materials[0];
+
+
+		std::string nameGroup = "Transform " + idStr;
+		TwAddSeparator(tw, ("Material "+mat.name + idStr).data(), ("group='" + nameGroup + "'").data());
+
+		TwAddVarRW(tw, ("Mat Color " + idStr).data(), TW_TYPE_COLOR3F, &mat.color, ("group='" + nameGroup + "'").data());
+		TwAddVarRW(tw, ("Mat Specular " + idStr).data(), TW_TYPE_COLOR3F, &mat.specular, ("group='" + nameGroup + "'").data());
+		TwAddVarRW(tw, ("Mat Diffuse " + idStr).data(), TW_TYPE_COLOR3F, &mat.diffuse, ("group='" + nameGroup + "'").data());
+
+
+		TwAddVarRW(tw, ("Mat Shiny " + idStr).data(), TW_TYPE_FLOAT, &mat.shiny, ("step=0.1 group='" + nameGroup + "'").data());
+		TwAddVarRW(tw, ("Mat Rough " + idStr).data(), TW_TYPE_FLOAT, &mat.rough, ("step=0.1 group='" + nameGroup + "'").data());
+		TwAddVarRW(tw, ("Mat Reflectance " + idStr).data(), TW_TYPE_FLOAT, &mat.reflectance, ("step=0.1 group='" + nameGroup + "'").data());
+
+		//TwAddVarRW(tw, name.data(), TW_TYPE_BOOL16, NULL, NULL);
+		// Add elem to bar
+	}
+
 };

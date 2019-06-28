@@ -1,15 +1,30 @@
 #pragma once
 
+#include <string>
+
+class Transform;
+class Entity;
+class API;
 class Component
 {
-public:
-    Component() = default;
-    Component(Component &&) = default;
-    Component(const Component &) = default;
-    Component &operator=(Component &&) = default;
-    Component &operator=(const Component &) = default;
-    virtual ~Component() = default;
-    virtual void Update() = 0;
 private:
-    
+	Entity *entity;
+protected:
+	Transform *transform;
+	std::string name;
+	Component() {
+	}
+public:
+	bool isOn = true;
+	friend class Entity;
+	virtual ~Component() = default;
+
+
+	virtual Entity& GetEntity() {
+		return *entity;
+	}
+	virtual Transform& GetTransform() {
+		return *transform;
+	}
+
 };
